@@ -1,5 +1,7 @@
 package com.raphael.apicache.dtos.request;
 
+import lombok.AllArgsConstructor;
+
 import java.math.BigDecimal;
 
 public class ProdutoRequest {
@@ -7,6 +9,12 @@ public class ProdutoRequest {
     private String nome;
     private String descricao;
     private BigDecimal preco;
+
+    public ProdutoRequest(String nome, String descricao, BigDecimal preco) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.preco = preco;
+    }
 
     public String getNome() {
         return nome;

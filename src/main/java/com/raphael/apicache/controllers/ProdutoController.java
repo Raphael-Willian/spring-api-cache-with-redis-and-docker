@@ -2,9 +2,11 @@ package com.raphael.apicache.controllers;
 
 import com.raphael.apicache.dtos.request.ProdutoRequest;
 import com.raphael.apicache.dtos.response.ProdutoResponse;
+import com.raphael.apicache.services.ProdutoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -18,8 +20,8 @@ public class ProdutoController {
     }
 
     @GetMapping
-    public ResponseEntity<ProdutoResponse> getAllProducts() {
-        ProdutoResponse response = produtoService.getAll();
+    public ResponseEntit<List<ProdutoResponse>> getAllProducts() {
+        List<ProdutoResponse> response = produtoService.getAll();
         return ResponseEntity.ok(response);
     }
 

@@ -1,10 +1,11 @@
 package com.raphael.apicache.dtos.response;
 
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 
-public class ProdutoResponse {
+public class ProdutoResponse implements Serializable {
     private String nome;
     private String descricao;
     private BigDecimal preco;

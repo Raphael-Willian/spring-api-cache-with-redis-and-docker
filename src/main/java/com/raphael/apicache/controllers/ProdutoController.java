@@ -1,6 +1,7 @@
 package com.raphael.apicache.controllers;
 
-import org.apache.catalina.connector.Response;
+import com.raphael.apicache.dtos.request.ProdutoRequest;
+import com.raphael.apicache.dtos.response.ProdutoResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

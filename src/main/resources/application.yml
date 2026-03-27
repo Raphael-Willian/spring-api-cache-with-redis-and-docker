@@ -1,0 +1,19 @@
+spring:
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/database-cache-postgresql
+    username: DB_USERNAME
+    password: DB_PASSWORD
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  cache:
+    type: redis

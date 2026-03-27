@@ -4,6 +4,7 @@ import com.raphael.apicache.dtos.request.ProdutoRequest;
 import com.raphael.apicache.dtos.response.ProdutoResponse;
 import com.raphael.apicache.models.Produto;
 import com.raphael.apicache.repositorys.ProdutoRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +20,9 @@ public class ProdutoService {
         this.produtoRepository = produtoRepository;
     }
 
+    @Cacheable(value = "produtos")
     public List<ProdutoResponse> getAll() {
+        System.out.println("BUSCANDO NO BANCO...");
 
         List<Produto> listaDeProdutos = produtoRepository.findAll();
 
@@ -33,7 +36,9 @@ public class ProdutoService {
 
     }
 
+    @Cacheable(value = "produtos", key = "#id")
     public ProdutoResponse getProductId(UUID id) {
+        System.out.println("BUSCANDO NO BANCO...");
         Produto produto = produtoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Produto com o ID: " + id + " não foi encontrado."));
 

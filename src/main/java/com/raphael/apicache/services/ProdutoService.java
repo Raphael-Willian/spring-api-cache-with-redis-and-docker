@@ -4,6 +4,8 @@ import com.raphael.apicache.dtos.request.ProdutoRequest;
 import com.raphael.apicache.dtos.response.ProdutoResponse;
 import com.raphael.apicache.models.Produto;
 import com.raphael.apicache.repositorys.ProdutoRepository;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,7 @@ public class ProdutoService {
 
         return listaDeProdutos.stream()
                 .map(p -> new ProdutoResponse(
+                        p.getIdProduct(),
                         p.getNameProduct(),
                         p.getDescription(),
                         p.getPriceOfProduct()
@@ -51,6 +54,33 @@ public class ProdutoService {
         produtoRepository.save(produto);
 
         return new ProdutoResponse(produto.getNameProduct(), produto.getDescription(), produto.getPriceOfProduct());
+
+    }
+
+    @CachePut(value = "produtos", key = "#id")
+    public ProdutoResponse putProduct(ProdutoRequest request) {
+
+        Produto produto = produtoRepository.findProdutoById(request.getId());
+
+        produto.setNameProduct(request.getNome());
+        produto.setDescription(request.getDescricao());
+        produto.setPriceOfProduct(request.getPreco());
+
+        produtoRepository.save(produto);
+
+        return new ProdutoResponse(produto.getNameProduct(), produto.getDescription(), produto.getPriceOfProduct());
+
+
+    }
+
+    @CacheEvict(value = "produtos", key = "#id")
+    public void deleteProduct(UUID idProduct) {
+
+        Produto produto = produtoRepository.findProdutoById(idProduct);
+
+        System.out.println("Produto deletado: " + produto.getNameProduct() + " | " + produto.getDescription() + " | " + produto.getPriceOfProduct());
+
+        produtoRepository.delete(produto);
 
     }
 

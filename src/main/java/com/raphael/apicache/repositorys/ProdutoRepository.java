@@ -12,4 +12,5 @@ public interface ProdutoRepository extends JpaRepository<Produto, UUID> {
 
     @Override
     Optional<Produto> findById(UUID uuid);
+    Produto findProdutoById(UUID uuid);
 }

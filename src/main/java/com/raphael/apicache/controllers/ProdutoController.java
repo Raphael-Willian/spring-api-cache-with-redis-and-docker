@@ -37,4 +37,15 @@ public class ProdutoController {
         return ResponseEntity.ok(response);
     }
 
+    @PutMapping
+    public ResponseEntity<ProdutoResponse> putProduct(@RequestBody ProdutoRequest request) {
+        ProdutoResponse response = produtoService.putProduct(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@PathVariable UUID uuid) {
+        produtoService.deleteProduct(uuid);
+    }
+
 }

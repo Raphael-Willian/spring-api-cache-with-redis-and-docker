@@ -25,8 +25,8 @@ public class ProdutoController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ProdutoResponse> getProductId(@PathVariable UUID idProduct) {
+    @GetMapping("/{idProduct}")
+    public ResponseEntity<ProdutoResponse> getProductId(@PathVariable("idProduct") UUID idProduct) {
         ProdutoResponse response =  produtoService.getProductId(idProduct);
         return ResponseEntity.ok(response);
     }
@@ -43,8 +43,8 @@ public class ProdutoController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable UUID uuid) {
+    @DeleteMapping("/{idProduct}")
+    public void deleteProduct(@PathVariable("idProduct") UUID uuid) {
         produtoService.deleteProduct(uuid);
     }
 

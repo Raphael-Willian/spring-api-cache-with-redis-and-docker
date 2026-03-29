@@ -5,8 +5,8 @@ import com.raphael.apicache.dtos.response.ProdutoResponse;
 import com.raphael.apicache.models.Produto;
 import com.raphael.apicache.repositorys.ProdutoRepository;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class ProdutoService {
         this.produtoRepository = produtoRepository;
     }
 
-    @Cacheable(value = "produtos")
+    @Cacheable("produtos")
     public List<ProdutoResponse> getAll() {
         System.out.println("BUSCANDO NO BANCO...");
 
@@ -38,15 +38,16 @@ public class ProdutoService {
 
     }
 
-    @Cacheable(value = "produtos", key = "#id")
+    @Cacheable(value = "produto", key = "#id")
     public ProdutoResponse getProductId(UUID id) {
         System.out.println("BUSCANDO NO BANCO...");
-        Produto produto = produtoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Produto com o ID: " + id + " não foi encontrado."));
+        Produto produto = produtoRepository.findByIdProduct(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));;
 
         return  new ProdutoResponse(produto.getNameProduct(), produto.getDescription(), produto.getPriceOfProduct());
     }
 
+    @CacheEvict(value = "produtos", allEntries = true)
     public ProdutoResponse createProduct(ProdutoRequest request) {
 
         Produto produto = new Produto(request.getNome(), request.getDescricao(), request.getPreco());
@@ -57,10 +58,14 @@ public class ProdutoService {
 
     }
 
-    @CachePut(value = "produtos", key = "#id")
+    @Caching(evict = {
+            @CacheEvict(value = "produto", key = "#request.id"),
+            @CacheEvict(value = "produtos", allEntries = true)
+    })
     public ProdutoResponse putProduct(ProdutoRequest request) {
 
-        Produto produto = produtoRepository.findProdutoById(request.getId());
+        Produto produto = produtoRepository.findByIdProduct(request.getId())
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
         produto.setNameProduct(request.getNome());
         produto.setDescription(request.getDescricao());
@@ -73,10 +78,14 @@ public class ProdutoService {
 
     }
 
-    @CacheEvict(value = "produtos", key = "#id")
+    @Caching(evict = {
+            @CacheEvict(value = "produto", key = "#p0"),
+            @CacheEvict(value = "produtos", allEntries = true)
+    })
     public void deleteProduct(UUID idProduct) {
 
-        Produto produto = produtoRepository.findProdutoById(idProduct);
+        Produto produto = produtoRepository.findByIdProduct(idProduct)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));;
 
         System.out.println("Produto deletado: " + produto.getNameProduct() + " | " + produto.getDescription() + " | " + produto.getPriceOfProduct());
 

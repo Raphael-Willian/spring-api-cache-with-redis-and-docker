@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class ProdutoService {
@@ -42,9 +41,7 @@ public class ProdutoService {
         Produto produto = produtoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Produto com o ID: " + id + " não foi encontrado."));
 
-        ProdutoResponse resposta = new ProdutoResponse(produto.getNameProduct(), produto.getDescription(), produto.getPriceOfProduct());
-
-        return  resposta;
+        return  new ProdutoResponse(produto.getNameProduct(), produto.getDescription(), produto.getPriceOfProduct());
     }
 
     public ProdutoResponse createProduct(ProdutoRequest request) {
@@ -52,9 +49,8 @@ public class ProdutoService {
         Produto produto = new Produto(request.getNome(), request.getDescricao(), request.getPreco());
 
         produtoRepository.save(produto);
-        ProdutoResponse resposta = new ProdutoResponse(produto.getNameProduct(), produto.getDescription(), produto.getPriceOfProduct());
 
-        return resposta;
+        return new ProdutoResponse(produto.getNameProduct(), produto.getDescription(), produto.getPriceOfProduct());
 
     }
 

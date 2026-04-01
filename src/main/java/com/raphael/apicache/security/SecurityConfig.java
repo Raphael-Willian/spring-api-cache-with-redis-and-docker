@@ -1,12 +1,13 @@
 package com.raphael.apicache.security;
 
-import jakarta.servlet.http.HttpServlet;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -26,6 +27,11 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .build();
 
-    } //git push -u origin <nome-da-branch> Executar no proximo push, para que o git entenda que os pushs serão default pra essa branch no github
+    }
 
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

@@ -1,7 +1,7 @@
 package com.raphael.apicache.services;
 
 import com.raphael.apicache.models.CustomUserDetails;
-import com.raphael.apicache.models.User;
+import com.raphael.apicache.models.Users;
 import com.raphael.apicache.repositorys.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,7 +19,7 @@ public class UserDetailsService implements org.springframework.security.core.use
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user =  userRepository.findByUsername(username)
+        Users user =  userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário " + username + " não encontrado"));
         return new CustomUserDetails(user);
 

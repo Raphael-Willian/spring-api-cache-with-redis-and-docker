@@ -12,11 +12,9 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
-    private User user;
-
+    private Users user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -18,12 +18,10 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final CustomUserDetails customUserDetails;
     private final UserDetailsService userDetailsService;
 
-    public JwtFilter(JwtService jwtService, CustomUserDetails customUserDetails, UserDetailsService userDetailsService) {
+    public JwtFilter(JwtService jwtService, UserDetailsService userDetailsService) {
         this.jwtService = jwtService;
-        this.customUserDetails = customUserDetails;
         this.userDetailsService = userDetailsService;
     }
 

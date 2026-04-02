@@ -42,9 +42,11 @@ public class ProdutoService {
     public ProdutoResponse getProductId(UUID id) {
         System.out.println("BUSCANDO NO BANCO...");
         Produto produto = produtoRepository.findByIdProduct(id)
-                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));;
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
-        return  new ProdutoResponse(produto.getNameProduct(), produto.getDescription(), produto.getPriceOfProduct());
+        System.out.println("VERIFICAÇÃO DE ID NULO: " + produto.getIdProduct());
+
+        return new ProdutoResponse(produto.getIdProduct(),produto.getNameProduct(), produto.getDescription(), produto.getPriceOfProduct());
     }
 
     @CacheEvict(value = "produtos", allEntries = true)
@@ -52,9 +54,9 @@ public class ProdutoService {
 
         Produto produto = new Produto(request.getNome(), request.getDescricao(), request.getPreco());
 
-        produtoRepository.save(produto);
+        Produto produtoSalvo = produtoRepository.save(produto);
 
-        return new ProdutoResponse(produto.getNameProduct(), produto.getDescription(), produto.getPriceOfProduct());
+        return new ProdutoResponse(produtoSalvo.getIdProduct(), produtoSalvo.getNameProduct(), produtoSalvo.getDescription(), produtoSalvo.getPriceOfProduct());
 
     }
 

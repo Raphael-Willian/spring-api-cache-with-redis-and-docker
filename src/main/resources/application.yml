@@ -1,7 +1,7 @@
 spring:
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/database-cache-postgresql
+    url: jdbc:postgresql://postgres:5432/database-cache-postgresql
     username: DB_USERNAME
     password: DB_PASSWORD
 
@@ -12,7 +12,7 @@ spring:
 
   data:
     redis:
-      host: localhost
+      host: redis
       port: 6379
 
   cache:

@@ -11,7 +11,7 @@ services:
       - postgres
       - redis
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/apicache
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/database-cache-postgresql
       SPRING_DATASOURCE_USERNAME: DB_USERNAME
       SPRING_DATASOURCE_PASSWORD: DB_PASSWORD
       SPRING_REDIS_HOST: redis

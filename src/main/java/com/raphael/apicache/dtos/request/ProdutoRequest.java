@@ -1,14 +1,25 @@
 package com.raphael.apicache.dtos.request;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 import java.util.UUID;
 
 public class ProdutoRequest {
 
     private UUID id;
+
+    @JsonProperty("name_product")
+    @NotNull
     private String nome;
+
+    @JsonProperty("description")
     private String descricao;
+
+    @JsonProperty("price")
+    @NotNull
     private BigDecimal preco;
 
     public ProdutoRequest(){}
